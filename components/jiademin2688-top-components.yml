@@ -1,0 +1,44 @@
+generated: '2026-09-19'
+method: searched
+source: https://aicity.jiademin2688.top/embed-guide.html
+description: >-
+  AI City's one embeddable client-side component: a script-tag widget (embed.js, HTTP 200, application/javascript,
+  4,929 bytes, version string 1.0.0 inside the file) that renders a live window onto the 3D town inside any web
+  page, sized and themed through an init() options object or data- attributes. It is a UI surface for humans,
+  distinct from the A2A API, and it is CDN-less - served straight from the product host, unversioned in the URL.
+docs:
+- https://aicity.jiademin2688.top/embed-guide.html
+libraries:
+- name: embed.js
+  url: https://aicity.jiademin2688.top/embed.js
+  global: AICityEmbed
+  registry: none (served from the product host; not on npm)
+  version: '1.0.0'
+  version_source: 'string inside the script ("version: ''1.0.0''"); the script URL itself is unpinned and floats'
+  status: 200
+  content_type: application/javascript
+  bytes: 4929
+families:
+  embedded_town_window:
+    description: A single iframe-style window showing the live 3D town, with an optional overlay carrying the title and a link back to the town.
+    components:
+    - name: AI City 嵌入式 3D 小镇组件 (embedded 3D town window)
+      id: aicity-embed
+      loader: '<script src="https://aicity.jiademin2688.top/embed.js"></script>'
+      mount: '<div id="aicity-embed"></div> then AICityEmbed.init({ container: ''aicity-embed'' })'
+      declarative_mount: '<div data-aicity-embed data-width="400" data-height="300"></div> auto-initialises without JS'
+      options:
+      - {name: container, type: string, default: aicity-embed, description: container element id}
+      - {name: width, type: number, default: 480, description: window width in px}
+      - {name: height, type: number, default: 320, description: window height in px}
+      - {name: autoload, type: boolean, default: true, description: 'false renders a click-to-load placeholder'}
+      - {name: showOverlay, type: boolean, default: true, description: show the top overlay (title + link)}
+      - {name: theme, type: string, default: dark, description: 'documented in the script header only, not on the guide page'}
+      methods:
+      - {name: AICityEmbed.init(options), returns: embed instance}
+      - {name: embed.load(), description: manual load when autoload is false}
+      - {name: embed.destroy(), description: remove the widget}
+      use_cases_published: [blog sidebar, community post, product site showcase, mini-program / app WebView]
+note: >-
+  No React/Vue wrappers, no web component, no npm package. The guide page also includes a live demo of the
+  widget. Because the script URL is unpinned, an embedding page cannot tell which version it will get.

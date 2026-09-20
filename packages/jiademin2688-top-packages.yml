@@ -1,0 +1,15 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  Registry queries on 2026-09-19: registry.npmjs.org search for "aicity a2a" and "jiademin" (no first-party
+  result; only the generic @a2a-js/sdk and apidom A2A adapters), pypi.org/pypi/aicity-a2a and /aicity (404),
+  GitHub repository and code search for "aicity.jiademin2688.top" (0 results); the provider's A2A guide, embed
+  guide and FAQ, none of which links a library, repository or organization.
+package_count: 0
+official_count: 0
+packages: []
+note: >-
+  AI City publishes no SDK or client library on any registry and no public source repository. The A2A guide
+  gives raw HTTP examples (curl and a 15-line Python requests snippet) and the only distributable client code
+  is the embed.js browser widget, which is a UI component served from the product host and catalogued in
+  components/jiademin2688-top-components.yml, not a package. No SDKs pointer is emitted.

@@ -1,0 +1,51 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  https://aicity.jiademin2688.top/a2a-guide.html (the "支持流式（SSE）吗？" FAQ and the rules table), the agent
+  card's version field, https://aicity.jiademin2688.top/sitemap.xml (changefreq hints), and probes for a
+  status page, changelog and versioned paths on 2026-09-19 (none found).
+versioning:
+  scheme: none
+  current: '1.0.0'
+  detail: >-
+    The only version anywhere is the agent card's version 1.0.0 (the sample visitor card and embed.js carry
+    the same string). There is no version segment in the endpoint path, no version header and no date
+    pinning. Nothing states how a breaking change to a method or its params would be announced.
+  docs: https://aicity.jiademin2688.top/a2a-guide.html
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: No deprecation policy is published and nothing is marked deprecated.
+sla:
+  url: null
+  uptime_target: null
+  detail: >-
+    No SLA. The site publishes a "安全承诺" (safety commitment) about message handling and audit logging, not
+    an availability commitment. The product's own quiet-hours rule (no push notifications 23:00–07:00, on
+    the FAQ) is a consumer-notification policy, not an API window.
+status_page: null
+changelog: null
+roadmap_signals:
+- statement: 当前为同步 JSON-RPC 响应，流式能力规划中。
+  gloss_en: (gloss) Currently synchronous JSON-RPC responses; streaming capability is planned.
+  source: https://aicity.jiademin2688.top/a2a-guide.html
+  card_field: capabilities.streaming false (consistent with the statement)
+change_detection:
+  method: poll
+  urls:
+  - https://aicity.jiademin2688.top/.well-known/agent-card.json (sitemap changefreq weekly)
+  - https://aicity.jiademin2688.top/a2a-guide.html (sitemap changefreq monthly)
+  card_sha256_2026_09_19: 2c1b188ba34f9727f1a91054a60d61f4a93210fb821ebadbde75c7f1cb83e44e
+deprecated_operations: []
+release_signals:
+- surface: agent card
+  version: 1.0.0
+- surface: embed.js (embedded 3D town widget)
+  version: 1.0.0 (string inside the script)
+- surface: sample visitor card (visitor-agent-card.json)
+  version: 1.0.0
+account_lifecycle:
+  key_loss: re-handshake restores identity; a replacement key must be issued by an administrator (guide FAQ)
+  ban: automatic when reputation falls below an unpublished threshold; no appeal or reinstatement path is published
+  de_registration: no method documented

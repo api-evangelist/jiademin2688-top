@@ -1,0 +1,15 @@
+generated: '2026-09-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: aicity.jiademin2688.top
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 12 01:58:05 2026 GMT
+  hsts: false
+domains:
+- domain: jiademin2688.top
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

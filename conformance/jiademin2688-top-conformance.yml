@@ -1,0 +1,84 @@
+generated: '2026-09-19'
+method: probed
+source: >-
+  The provider's A2A agent card at https://aicity.jiademin2688.top/.well-known/agent-card.json (HTTP 200,
+  saved verbatim to a2a/), live responses from https://aicity.jiademin2688.top/a2a on 2026-09-19, the
+  well-known probe in well-known/jiademin2688-top-well-known.yml, and the provider's A2A guide at
+  https://aicity.jiademin2688.top/a2a-guide.html. Every entry names the location that carries the evidence.
+sector: AI companion / agent social platform (agent-to-agent interoperability)
+domain_standards_note: >-
+  The one standard that matters in this market is A2A - agent discovery via a well-known card and
+  agent-to-agent messaging via JSON-RPC. AI City declares it loudly (the homepage title ends "A2A开放生态",
+  the guide is titled "A2A协议接入教程", robots.txt and sitemap.xml both point at the card, and the town is
+  listed on a2aregistry.org) and serves a real card and a live JSON-RPC endpoint, but the card fails an A2A
+  1.0.0 hard check (no protocolVersion) and the method vocabulary is custom (handshake/chat/post/gift rather
+  than message/send and tasks/*), so A2A is recorded as declared-not-conformant. JSON-RPC 2.0 is recorded as
+  conformant on the observed envelope. Nothing is invented to fill a slot; the provider publishes no
+  certifications or compliance program, so no Compliance pointer is emitted.
+standards:
+- id: a2a
+  name: A2A Agent Card + protocol (A2A 1.0.0)
+  conforms: false
+  declared: true
+  domain_standard: true
+  evidence:
+    location: a2a/jiademin2688-top-agent-card.json
+    detail: >-
+      Card served at the canonical path and the legacy path (byte-identical). capabilities is an object and
+      skills is an array, but protocolVersion is absent - grade flavored (a2a/jiademin2688-top-a2a.yml).
+      Auth is in the pre-0.3 authentication field; skills lack tags[]. The card's url is a live JSON-RPC
+      endpoint (GET 405 allow POST; anonymous POST → JSON-RPC error -32001), but the documented methods are
+      custom names, not A2A's message/send or tasks/*; tasks/get was answered with the auth error rather
+      than method-not-found, so whether the standard methods exist behind the key is unknown.
+- id: json-rpc-2.0
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence:
+    location: errors/jiademin2688-top-problem-types.yml#/problems/0/observed
+    detail: >-
+      Request and response envelopes match JSON-RPC 2.0: {"jsonrpc":"2.0","id":1,"method":...,"params":...}
+      in, {"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":...}} out with the id echoed and an
+      implementation-defined code in the -32000..-32099 server-error range. The guide's curl and Python
+      examples use the same envelope.
+- id: rfc8615-well-known
+  name: RFC 8615 well-known URIs
+  conforms: true
+  evidence:
+    location: well-known/jiademin2688-top-well-known.yml
+    detail: The agent card is served under /.well-known/ on the product host with application/json, and robots.txt allows it explicitly.
+- id: openapi
+  name: OpenAPI Specification
+  conforms: false
+  evidence:
+    location: well-known/jiademin2688-top-well-known.yml#/root_discovery
+    detail: No OpenAPI/Swagger document at any conventional path on the host; the FastAPI backend under /api/ has its docs routes disabled (404 {"detail":"Not Found"}) and robots.txt disallows /api/.
+- id: oauth2
+  name: OAuth 2.0 / OIDC
+  conforms: false
+  evidence:
+    location: authentication/jiademin2688-top-authentication.yml
+    detail: apiKey (X-A2A-Key) only; /.well-known/openid-configuration, oauth-authorization-server and oauth-protected-resource all 404.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence:
+    location: errors/jiademin2688-top-problem-types.yml
+    detail: Errors are JSON-RPC error objects inside HTTP 200 and FastAPI {"detail"} bodies; no application/problem+json.
+- id: rfc9116-security-txt
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence:
+    location: well-known/jiademin2688-top-well-known.yml
+    detail: /.well-known/security.txt 404 on the product host; SPA shell (soft-404) on the apex.
+- id: mcp
+  name: Model Context Protocol
+  conforms: false
+  evidence:
+    location: well-known/jiademin2688-top-well-known.yml#/root_discovery
+    detail: 'POST tools/list to /mcp, /sse and /api/mcp all 404; no /.well-known/mcp.json. The provider ships no MCP server.'
+- id: llms-txt
+  name: llms.txt
+  conforms: false
+  evidence:
+    location: llms/jiademin2688-top-llms.txt
+    detail: /llms.txt 404 on the product host (the apex answers its SPA shell). The file in llms/ is API Evangelist-generated, not provider-published.

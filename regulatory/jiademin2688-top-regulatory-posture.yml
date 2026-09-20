@@ -1,0 +1,80 @@
+generated: '2026-09-19'
+method: searched
+probe: true
+source: >-
+  Artifacts harvested this run (well-known/, security/, lifecycle/, conformance/), conventional paths probed
+  live on the product host aicity.jiademin2688.top on 2026-09-19, and the provider's landing page, FAQ and A2A
+  guide. The apex jiademin2688.top is an SPA catch-all (HTTP 200 HTML for every path) so nothing can be
+  established by probing it; it also hosts a different product.
+signals: {}
+probed_absent:
+- signal: subprocessors
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/legal/subprocessors', status: 404}
+  - {url: 'https://aicity.jiademin2688.top/privacy', status: 404}
+  - {url: 'https://aicity.jiademin2688.top/privacy.html', status: 404}
+  note: >-
+    The landing page's sign-up form says registration implies agreement to 《服务条款》 and 《隐私政策》 (terms of
+    service, privacy policy), but both anchors are href="#" - no policy document is served at any URL found. The
+    FAQ names ChromaDB and Three.js as technology and the top-up dialog names WeChat Pay, which are not a
+    dated subprocessor table.
+- signal: data_subject_request
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/privacy/requests', status: 404}
+  note: No privacy policy and no rights-request channel published.
+- signal: incident_notification
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/legal/dpa', status: 404}
+  note: No DPA, no breach-notification commitment.
+- signal: ai_transparency
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/ai/transparency', status: 404}
+  - {url: 'https://aicity.jiademin2688.top/transparency', status: 404}
+  note: >-
+    The product is openly AI-driven (AI pets, AI-written pet blog posts published daily at 08:00, AI video
+    editing, AI novel co-writing) and the A2A guide publishes a safety commitment that messages are never
+    executed as instructions and are all audit-logged. That is product description and a prompt-injection
+    posture, not a published AI transparency statement toward users, so it is not recorded as the signal.
+- signal: training_data_summary
+  note: Not a model provider; nothing published.
+- signal: accessibility_conformance
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/accessibility', status: 404}
+  - {url: 'https://aicity.jiademin2688.top/accessibility/vpat', status: 404}
+- signal: sbom
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/security/sbom', status: 404}
+  note: Never derived - search only.
+- signal: support_lifetime
+  note: No versioning or support-period statement anywhere; see lifecycle/.
+- signal: data_residency
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/docs/data-residency', status: 404}
+  note: The host resolves to 124.223.193.166 and the payment rail is WeChat Pay; those are observations, not a published residency commitment.
+- signal: global_privacy_control
+  note: No published statement. Not tested by sending a header.
+- signal: age_assurance
+  note: >-
+    The sign-up form warns that phone numbers are verified by SMS code and that numbers failing verification
+    are cancelled ("严禁冒用他人手机号码注册，平台将定时通过短信验证码进行核验"). That is identity/phone verification,
+    not an age-assurance mechanism, so it is not recorded as the signal.
+- signal: notice_and_action
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/legal/report-content', status: 404}
+  note: No report-content channel published; the reputation system (deductions, automatic bans) is enforcement, not a notice process.
+- signal: transparency_report
+  urls:
+  - {url: 'https://aicity.jiademin2688.top/transparency', status: 404}
+- signal: exit_assistance
+  note: Nothing published; no de-registration or export method is documented for agents or users.
+legal_pages_probed:
+- {url: 'https://aicity.jiademin2688.top/terms', status: 404}
+- {url: 'https://aicity.jiademin2688.top/terms.html', status: 404}
+- {url: 'https://aicity.jiademin2688.top/privacy', status: 404}
+- {url: 'https://aicity.jiademin2688.top/privacy.html', status: 404}
+- {url: 'https://aicity.jiademin2688.top/landing.html', status: 200, note: 'footer "© 2026 AI宠物小镇 · 治愈系 AI 宠物社交" and a customer-service phone number; no legal entity name, address or ICP filing number found in the served HTML'}
+note: >-
+  An empty signals map is the finding. The provider publishes a real machine surface (agent card, JSON-RPC
+  endpoint, developer guide) and an almost entirely absent legal layer: the terms and privacy links on the
+  sign-up form point nowhere. Which regimes reach the provider is decided by the Kin Score regime map, not
+  here.

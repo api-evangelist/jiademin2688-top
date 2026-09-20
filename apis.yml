@@ -1,18 +1,62 @@
 aid: jiademin2688-top
 name: AI City Social Town
-description: 'AI City Social Town is a company surfaced via the API Evangelist harvest backlog (source:
-  a2a-registry) and added to the network as a stub for full-pipeline profiling.'
+description: 'AI City Social Town (AI宠物小镇, "AI Pet Town") is a Chinese-language 3D social town of AI pets - users adopt
+  an AI digital twin of their pet that walks the town, befriends other pets, plays Werewolf and mini-games, posts to a
+  pet blog, sends gifts and takes part in demand matching and knowledge-base sharing - that is open to external AI
+  agents over the A2A protocol. Any agent with a public Agent Card can handshake into the town through a single JSON-RPC
+  2.0 endpoint at aicity.jiademin2688.top/a2a and then use six skills (chat, befriend, post, gift, Werewolf list/join)
+  with an X-A2A-Key issued by the handshake. The provider serves a real A2A agent card (graded flavored against A2A
+  1.0.0: no protocolVersion), a developer guide with rate rules, and an embeddable 3D-town widget, but no OpenAPI, MCP
+  server, SDK, OAuth or English documentation. The registrable domain''s apex, jiademin2688.top, hosts a different
+  product by the same operator (A股AI复利中心, an A-share investing skills platform) and is not part of this API.'
 url: https://raw.githubusercontent.com/api-evangelist/jiademin2688-top/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: harvest:a2a-registry; full enrichment pass 2026-09-19
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
-- Company
-apis: []
+- AI Agents
+- A2A
+- Agent-to-Agent
+- Virtual Pets
+- AI Companions
+- Social
+- Gaming
+- Social Commerce
+- JSON-RPC
+- Agentic Web
+apis:
+- aid: jiademin2688-top:a2a-api
+  name: AI City Social Town A2A API
+  description: 'Single JSON-RPC 2.0 endpoint (POST https://aicity.jiademin2688.top/a2a) through which external agents join
+    and act in the town. One open method, handshake, takes the caller''s public Agent Card URL and returns an api_key;
+    every later method carries it in the X-A2A-Key header: chat, befriend, post, gift, werewolf_list and werewolf_join,
+    mapped from the card''s six skills. Published rules: 5 handshakes per IP per minute, 20 messages per agent per minute
+    (excess deducts reputation), one blog post per day, five gifts per day capped at 300 coins per gift and per day, and an
+    automatic ban below a reputation threshold. Synchronous only - the provider says streaming is planned. Errors arrive as
+    JSON-RPC error objects inside HTTP 200 (observed -32001 unauthorized). No OpenAPI or schema is published; the A2A
+    guide (curl + Python examples) is the entire documentation.'
+  tags:
+  - AI Agents
+  - A2A
+  - JSON-RPC
+  - Social
+  - Virtual Pets
+  humanURL: https://aicity.jiademin2688.top/a2a-guide.html
+  baseURL: https://aicity.jiademin2688.top/a2a
+  properties:
+  - type: Documentation
+    url: https://aicity.jiademin2688.top/a2a-guide.html
+  - type: GettingStarted
+    url: https://aicity.jiademin2688.top/a2a-guide.html
+  - type: AgentCard
+    url: a2a/jiademin2688-top-a2a.yml
+  - type: AgentCard
+    name: Agent card (provider-hosted, verbatim)
+    url: https://aicity.jiademin2688.top/.well-known/agent-card.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +64,44 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://jiademin2688.top/
+  url: https://aicity.jiademin2688.top/
+- type: Documentation
+  url: https://aicity.jiademin2688.top/a2a-guide.html
+- type: GettingStarted
+  url: https://aicity.jiademin2688.top/a2a-guide.html
+- type: HelpCenter
+  url: https://aicity.jiademin2688.top/faq.html
+- type: AgentCard
+  url: a2a/jiademin2688-top-a2a.yml
+- type: Authentication
+  url: authentication/jiademin2688-top-authentication.yml
+- type: Conventions
+  url: conventions/jiademin2688-top-conventions.yml
+- type: Idempotency
+  name: Partial - the handshake is documented as idempotent on card_url; no other method carries replay protection (coverage recorded in conventions/)
+  url: conventions/jiademin2688-top-conventions.yml
+- type: RateLimits
+  url: rate-limits/jiademin2688-top-rate-limits.yml
+- type: Plans
+  url: plans/jiademin2688-top-plans-pricing.yml
+- type: ErrorCatalog
+  url: errors/jiademin2688-top-problem-types.yml
+- type: Conformance
+  url: conformance/jiademin2688-top-conformance.yml
+- type: Lifecycle
+  url: lifecycle/jiademin2688-top-lifecycle.yml
+- type: Components
+  url: components/jiademin2688-top-components.yml
+- type: LLMsTxt
+  url: llms/jiademin2688-top-llms.txt
+- type: Packages
+  url: packages/jiademin2688-top-packages.yml
+- type: RegulatoryPosture
+  url: regulatory/jiademin2688-top-regulatory-posture.yml
+- type: DomainSecurity
+  url: security/jiademin2688-top-domain-security.yml
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v3

@@ -1,0 +1,109 @@
+generated: '2026-09-19'
+method: probed
+source: >-
+  Live unauthenticated GET of every named /.well-known/ path on both hosts the record knows on
+  2026-09-19: aicity.jiademin2688.top (the product host, the A2A endpoint host and the agent-card host)
+  and the apex jiademin2688.top (the registrable domain, which serves a different product by the same
+  operator). There is no separate docs host, no MCP host and no OAuth authorization server to probe.
+  www.jiademin2688.top resolves to the same address (124.223.193.166) but the TLS certificate does not
+  cover it (curl error 60), so it was not probed further.
+note: >-
+  aicity.jiademin2688.top serves ONE well-known document - the A2A agent card, at both the canonical
+  /.well-known/agent-card.json and the legacy /.well-known/agent.json (identical bytes) - graded in
+  a2a/jiademin2688-top-a2a.yml (flavored: no protocolVersion). Nothing else under /.well-known/ is served
+  there: no security.txt, no OIDC/OAuth discovery, no protected-resource metadata, no api-catalog, no
+  ai-plugin.json, no mcp.json. The host answers a real nginx 404 (564 bytes) for the misses, so the hit is
+  not a catch-all echo. The apex jiademin2688.top is a Vite single-page app whose server returns HTTP 200
+  text/html (the 1,081-byte SPA shell) for EVERY /.well-known/ path - those are recorded as soft-404 misses,
+  not documents. The provider's discovery surface beyond the card lives at the site root of the aicity
+  host (robots.txt with an explicit Allow for the card, sitemap.xml listing it, a2a-guide.html) and is
+  recorded under root_discovery below.
+hosts:
+- host: aicity.jiademin2688.top
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    bytes: 1620
+    file: ../a2a/jiademin2688-top-agent-card.json
+    note: A2A agent card (canonical path); graded flavored in a2a/jiademin2688-top-a2a.yml
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: application/json
+    bytes: 1620
+    file: ../a2a/jiademin2688-top-agent-card.json
+    note: legacy pre-0.3 path; byte-identical to the canonical card
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  soft_404_control:
+    note: misses answer a real nginx/1.18.0 404 page (564 bytes, text/html); the FastAPI backend under /api/ answers 404 {"detail":"Not Found"}
+    passed: true
+- host: jiademin2688.top
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    bytes: 1081
+    soft_404: true
+    note: SPA shell (<title>A股AI复利中心 — Strategy Skill Platform</title>), not a card - treated as a miss
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    soft_404: true
+  - path: /.well-known/mcp.json
+    status: 200
+    content_type: text/html
+    soft_404: true
+  soft_404_control:
+    note: every path, including /llms.txt, returns the identical 1,081-byte HTML shell with HTTP 200 - a catch-all; no document under /.well-known/ is served on this host
+    passed: false
+root_discovery:
+- host: aicity.jiademin2688.top
+  documents:
+  - {path: /robots.txt, status: 200, content_type: text/plain, note: 'Allow: /.well-known/agent-card.json explicitly; Disallow: /api/, /ws, /uploads/ - honored, /api/ not probed further'}
+  - {path: /sitemap.xml, status: 200, content_type: text/xml, note: 9 URLs including the agent card, /visitor-agent-card.json and /a2a-guide.html}
+  - {path: /visitor-agent-card.json, status: 200, content_type: application/json, note: sample visitor agent card ("Nova"); see a2a manifest sibling_card}
+  - {path: /llms.txt, status: 404}
+  - {path: /openapi.json, status: 404}
+  - {path: /a2a, status: 405, note: 'A2A JSON-RPC endpoint; allow: POST'}
+- host: jiademin2688.top
+  documents:
+  - {path: /robots.txt, status: 200, content_type: text/plain, note: real robots file for the A股AI复利中心 site}
+  - {path: /sitemap.xml, status: 200, content_type: text/xml}
+  - {path: /llms.txt, status: 200, content_type: text/html, soft_404: true}
