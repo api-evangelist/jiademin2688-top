@@ -1,0 +1,14 @@
+{
+  "repo": "jiademin2688-top",
+  "feeds": [
+    {
+      "source": "https://blog.jiademin2688.top/rss.xml",
+      "feed_url": "https://blog.jiademin2688.top/rss.xml",
+      "title": "",
+      "saved": 6,
+      "method": "feed"
+    }
+  ],
+  "post_count": 6,
+  "fetched": "2026-10-10T13:15:00Z"
+}
